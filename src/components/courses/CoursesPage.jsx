@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {courseAdded} from "../../store/courses";
+import {courseAdded, getCourses} from "../../store/courses";
 
 const initialCourse = {
   title: "",
@@ -10,7 +10,11 @@ const CoursesPage = () => {
   const [course, setCourse] = useState(initialCourse);
 
   const dispatch = useDispatch();
-  const courses = useSelector((state) => state.entities.courses);
+  const {courses} = useSelector((state) => state.entities.courses);
+
+  useEffect(() => {
+    dispatch(getCourses());
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const {name, value} = e.target;
