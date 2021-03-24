@@ -16,7 +16,9 @@ const slice = createSlice({
       state.courses = action.payload.data;
       state.pages = Math.ceil(action.payload.total / 4);
     },
-    onError: (state, action) => [(state.error = action.payload)],
+    onError: (state, action) => {
+      state.error = action.payload;
+    },
   },
 });
 
