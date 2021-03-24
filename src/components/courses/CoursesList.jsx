@@ -1,8 +1,8 @@
-import React from "react";
+import React, {memo} from "react";
 import PropTypes from "prop-types";
 import {Link} from "@reach/router";
 
-const CoursesList = ({courses}) => {
+const CoursesList = memo(({courses}) => {
   return (
     <table className="table">
       <thead>
@@ -31,7 +31,7 @@ const CoursesList = ({courses}) => {
       </tbody>
     </table>
   );
-};
+});
 
 CoursesList.propTypes = {
   courses: PropTypes.array.isRequired,

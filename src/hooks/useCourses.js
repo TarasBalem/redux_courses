@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {getCourses} from "../store/courses";
 import {getAuthors} from "../store/authors";
@@ -20,12 +20,16 @@ export default function useCourses() {
     }
   }, [authors.length, dispatch]);
 
-  const renderCourses = !authors.length
-    ? []
-    : courses.map((course) => ({
-        ...course,
-        authorName: authors.find((a) => a.id === course.authorId).name,
-      }));
+  const renderCourses = useMemo(
+    () =>
+      !authors.length
+        ? []
+        : courses.map((course) => ({
+            ...course,
+            authorName: authors.find((a) => a.id === course.authorId).name,
+          })),
+    [authors, courses]
+  );
 
   return {dispatch, courses: renderCourses, pages, authors};
 }
