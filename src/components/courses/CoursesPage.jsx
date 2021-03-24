@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
-import {useSelector, useDispatch} from "react-redux";
-import {courseAdded, getCourses} from "../../store/courses";
-import {getAuthors} from "../../store/authors";
+import React, {useState} from "react";
+import {courseAdded} from "../../store/courses";
+import useCourses from "../../hooks/useCourses";
+
 import CoursesList from "./CoursesList";
 
 const initialCourse = {
@@ -10,22 +10,7 @@ const initialCourse = {
 
 const CoursesPage = () => {
   const [course, setCourse] = useState(initialCourse);
-
-  const dispatch = useDispatch();
-  const {courses} = useSelector((state) => state.entities.courses);
-  const {authors} = useSelector((state) => state.entities.authors);
-
-  useEffect(() => {
-    if (courses.length === 0) {
-      dispatch(getCourses());
-    }
-  }, [courses.length, dispatch]);
-
-  useEffect(() => {
-    if (authors.length === 0) {
-      dispatch(getAuthors());
-    }
-  }, [authors.length, dispatch]);
+  const {dispatch, courses} = useCourses();
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -37,13 +22,6 @@ const CoursesPage = () => {
     dispatch(courseAdded(course));
     setCourse(initialCourse);
   };
-
-  const renderCourses = !authors.length
-    ? []
-    : courses.map((course) => ({
-        ...course,
-        authorName: authors.find((a) => a.id === course.authorId).name,
-      }));
 
   return (
     <div className="container mt-5">
@@ -67,7 +45,7 @@ const CoursesPage = () => {
           </div>
         </div>
       </form>
-      <CoursesList courses={renderCourses} />
+      <CoursesList courses={courses} />
     </div>
   );
 };
