@@ -27,7 +27,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "./node_modules/.bin/concurrently \"npm run start:api\" \"npm start\"",
+    "prestart:api": "node tools/createMockDb.js",
+    "start:api": "node tools/apiServer.js"
   },
   "eslintConfig": {
     "extends": [
@@ -67,5 +70,6 @@
     "react-test-renderer": "^17.0.1",
     "redux-mock-store": "^1.5.4",
     "rimraf": "^3.0.2"
-  }
+  },
+  "apiurl": "http://localhost:3001"
 }
