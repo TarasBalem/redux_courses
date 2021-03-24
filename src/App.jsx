@@ -5,6 +5,9 @@ import HomePage from "./components/home/HomePage";
 import Spinner from "./components/common/Spinner";
 
 const CoursesPage = lazy(() => import("./components/courses/CoursesPage"));
+const ManageCoursesPage = lazy(() =>
+  import("./components/courses/ManageCoursesPage")
+);
 const AboutPage = lazy(() => import("./components/about/AboutPage"));
 const PageNotFound = lazy(() => import("./components/common/PageNotFound"));
 
@@ -16,6 +19,7 @@ const App = () => {
         <Router>
           <HomePage path="/" />
           <CoursesPage path="courses" />
+          <ManageCoursesPage path="/course/:slug" />
           <AboutPage path="about" />
           <PageNotFound default />
         </Router>
