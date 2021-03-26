@@ -1,14 +1,19 @@
 import React, {useState, useEffect} from "react";
+import {useSelector} from "react-redux";
 import {Redirect, useParams} from "@reach/router";
-import {courseAdded} from "../../store/courses";
+import {saveCourse} from "../../store/courses";
 import useCourses from "../../hooks/useCourses";
 import CourseForm from "./CourseForm";
+import Spinner from "../common/Spinner";
 
 const newCourse = {id: null, title: "", authorId: "", category: ""};
 
 const ManageCoursesPage = () => {
   const [course, setCourse] = useState(newCourse);
   const [errors, setErrors] = useState({});
+  const [redirect, setRedirect] = useState(false);
+
+  const {loading} = useSelector((state) => state.apiStatus);
   const {dispatch, courses, authors} = useCourses();
 
   const {slug} = useParams();
@@ -35,11 +40,13 @@ const ManageCoursesPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(course);
+    dispatch(saveCourse(course)).then(() => setRedirect(true));
   };
 
   return (
     <div className="container mt-5">
+      {loading > 0 && <Spinner />}
+      {redirect && <Redirect to="/courses" noThrow />}
       <div className="row">
         <CourseForm
           handleSubmit={handleSubmit}

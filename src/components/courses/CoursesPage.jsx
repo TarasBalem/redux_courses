@@ -1,11 +1,17 @@
 import React from "react";
 import {Link} from "@reach/router";
+import {useSelector} from "react-redux";
 import useCourses from "../../hooks/useCourses";
-
 import CoursesList from "./CoursesList";
+import Spinner from "../common/Spinner";
 
 const CoursesPage = () => {
   const {courses} = useCourses();
+  const {loading} = useSelector((state) => state.apiStatus);
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="container mt-5">
