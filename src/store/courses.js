@@ -55,6 +55,7 @@ export const saveCourse = (course) => async (dispatch) => {
     course.id
       ? dispatch(courseUpdated(savedCourse.data))
       : dispatch(courseAdded(savedCourse.data));
+    dispatch(getCourses());
   } catch (err) {
     dispatch(onError(err));
     throw err;

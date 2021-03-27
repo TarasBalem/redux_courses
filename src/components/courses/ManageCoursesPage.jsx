@@ -48,7 +48,7 @@ const ManageCoursesPage = () => {
     if (!authorId) errors.authorId = "Author id cannot be blank";
     if (!category) errors.category = "Category cannot be blank";
     setErrors(errors);
-    return Object.keys(errors) === 0;
+    return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = (e) => {
