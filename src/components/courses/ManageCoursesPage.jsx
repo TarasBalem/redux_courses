@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
 import {Redirect, useParams} from "@reach/router";
+import {toast} from "react-toastify";
 import {saveCourse} from "../../store/courses";
 import useCourses from "../../hooks/useCourses";
 import CourseForm from "./CourseForm";
@@ -40,7 +41,10 @@ const ManageCoursesPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(saveCourse(course)).then(() => setRedirect(true));
+    dispatch(saveCourse(course)).then(() => {
+      toast.success("course saved");
+      setRedirect(true);
+    });
   };
 
   return (

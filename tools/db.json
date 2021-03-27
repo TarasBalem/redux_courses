@@ -2,7 +2,7 @@
   "courses": [
     {
       "id": 1,
-      "title": "Front end 123",
+      "title": "Front end123",
       "slug": "front-end",
       "authorId": 1,
       "category": "frontend",
@@ -70,15 +70,6 @@
       "slug": "framework-symphony",
       "authorId": 2,
       "category": "backend"
-    },
-    {
-      "id": 11,
-      "title": "test123",
-      "authorId": 1,
-      "category": "PHP123",
-      "createdAt": 1616769172254,
-      "slug": "test",
-      "authorName": "Robert Williams"
     }
   ],
   "authors": [
