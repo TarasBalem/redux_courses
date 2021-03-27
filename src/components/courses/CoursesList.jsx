@@ -2,7 +2,7 @@ import React, {memo} from "react";
 import PropTypes from "prop-types";
 import {Link} from "@reach/router";
 
-const CoursesList = memo(({courses}) => {
+const CoursesList = memo(({courses, handleDelete}) => {
   return (
     <table className="table">
       <thead>
@@ -24,7 +24,12 @@ const CoursesList = memo(({courses}) => {
             <td>{course.authorName}</td>
             <td>{course.category}</td>
             <td>
-              <button className="btn btn-outline-danger">Delete course</button>
+              <button
+                onClick={() => handleDelete(course)}
+                className="btn btn-outline-danger"
+              >
+                Delete course
+              </button>
             </td>
           </tr>
         ))}

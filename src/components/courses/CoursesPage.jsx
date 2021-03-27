@@ -2,10 +2,11 @@ import React, {useState} from "react";
 import {Link} from "@reach/router";
 import {useSelector} from "react-redux";
 import ReactPaginate from "react-paginate";
+import {toast} from "react-toastify";
 import useCourses from "../../hooks/useCourses";
 import CoursesList from "./CoursesList";
 import Spinner from "../common/Spinner";
-import {getCourses} from "../../store/courses";
+import {getCourses, courseAdded, deleteCourse} from "../../store/courses";
 
 const CoursesPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -16,6 +17,16 @@ const CoursesPage = () => {
     const newPage = data.selected + 1;
     setCurrentPage(data.selected);
     dispatch(getCourses(newPage));
+  };
+
+  const handleDelete = async (course) => {
+    toast.success("course deleted");
+    try {
+      await dispatch(deleteCourse(course));
+    } catch (err) {
+      toast.error("Delete failed" + err.message, {autoClose: false});
+      dispatch(courseAdded(course));
+    }
   };
 
   if (loading) {
@@ -30,7 +41,7 @@ const CoursesPage = () => {
       </Link>
       {courses.length ? (
         <>
-          <CoursesList courses={courses} />
+          <CoursesList courses={courses} handleDelete={handleDelete} />
           <ReactPaginate
             pageCount={pages}
             forcePage={currentPage}
