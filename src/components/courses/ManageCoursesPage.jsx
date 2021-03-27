@@ -13,6 +13,7 @@ const ManageCoursesPage = () => {
   const [course, setCourse] = useState(newCourse);
   const [errors, setErrors] = useState({});
   const [redirect, setRedirect] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const {loading} = useSelector((state) => state.apiStatus);
   const {dispatch, courses, authors} = useCourses();
@@ -37,14 +38,32 @@ const ManageCoursesPage = () => {
       ...prev,
       [name]: name === "authorId" ? parseInt(value) : value,
     }));
+    setErrors((prev) => ({...prev, [name]: ""}));
+  };
+
+  const formIsValid = () => {
+    const {title, authorId, category} = course;
+    const errors = {};
+    if (!title) errors.title = "Title cannot be blank";
+    if (!authorId) errors.authorId = "Author id cannot be blank";
+    if (!category) errors.category = "Category cannot be blank";
+    setErrors(errors);
+    return Object.keys(errors) === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(saveCourse(course)).then(() => {
-      toast.success("course saved");
-      setRedirect(true);
-    });
+    if (!formIsValid()) return;
+    setSaving(true);
+    dispatch(saveCourse(course))
+      .then(() => {
+        toast.success("course saved");
+        setRedirect(true);
+      })
+      .catch((err) => {
+        setErrors({onSave: err.message});
+        setSaving(false);
+      });
   };
 
   return (
@@ -58,7 +77,7 @@ const ManageCoursesPage = () => {
           course={course}
           authors={authors}
           errors={errors}
-          saving={false}
+          saving={saving}
         />
       </div>
     </div>

@@ -57,6 +57,7 @@ export const saveCourse = (course) => async (dispatch) => {
       : dispatch(courseAdded(savedCourse.data));
   } catch (err) {
     dispatch(onError(err));
+    throw err;
   } finally {
     dispatch(apiCallSuccess());
   }
